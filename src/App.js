@@ -4,8 +4,8 @@ import Table from './Table'
 
 class App extends Component {
     // Create array of characters to include in table and pass as arg to Table component
-    render() {
-        const characters = [
+    state = {
+        characters: [
             {
                 name: 'Charlie',
                 job: 'Janitor'
@@ -13,19 +13,34 @@ class App extends Component {
             {
                 name: 'Mac',
                 job: 'Bouncer',
-              },
-              {
+            },
+            {
                 name: 'Dee',
                 job: 'Aspring actress',
-              },
-              {
+            },
+            {
                 name: 'Dennis',
                 job: 'Bartender',
-              }
+            }
         ]
+    }
+    removeCharacter = (index) => {
+        const {characters} = this.state
+
+        this.setState({
+            // filter creates a new array - best for modifying arrays in js
+            characters: characters.filter((character, i) => {
+                return i !== index
+            })
+        })
+    }
+
+    render () {
+        const {characters} = this.state
+
         return (
             <div className="container">
-                <Table characterData={characters} />
+                <Table characterData={characters} removeCharacter={this.removeCharacter} />
             </div>
         )
     }
